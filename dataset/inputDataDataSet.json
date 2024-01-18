@@ -1,0 +1,20 @@
+{
+	"name": "inputDataDataSet",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LinkedService_StorageDemo",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "Azure Data Engineering Course",
+				"folderPath": "input",
+				"container": "adfdemo"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,20 @@
+{
+	"name": "powerquery1",
+	"properties": {
+		"type": "WranglingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"name": "EmployeeDataSet",
+					"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tpartitionBy('hash', 1)) ~> EmployeeDataSet",
+					"dataset": {
+						"referenceName": "EmployeeDataSet",
+						"type": "DatasetReference"
+					}
+				}
+			],
+			"script": "section Section1;\r\nshared EmployeeDataSet = let AdfDoc = AzureStorage.BlobContents(\"https://storagedemoshabz.blob.core.windows.net/adfdemo/input/employee.csv\"),Csv = Csv.Document(AdfDoc, [Delimiter = \",\", Encoding = TextEncoding.Utf8, QuoteStyle = QuoteStyle.Csv]) in  Csv;\r\nshared UserQuery = let Source = #\"EmployeeDataSet\" in Source;\r\n",
+			"documentLocale": "en-us"
+		}
+	}
+}

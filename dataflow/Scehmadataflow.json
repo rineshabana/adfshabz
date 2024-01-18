@@ -1,0 +1,46 @@
+{
+	"name": "Scehmadataflow",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "EmployeeDataSet",
+						"type": "DatasetReference"
+					},
+					"name": "Employees"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "OutputdataSet",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [],
+			"scriptLines": [
+				"source(output(",
+				"          empid as integer,",
+				"          name as string,",
+				"          salary as string,",
+				"          department as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     inferDriftedColumnTypes: true,",
+				"     ignoreNoFilesFound: false,",
+				"     preferredIntegralType: 'integer') ~> Employees",
+				"Employees sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['schema.csv'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> sink1"
+			]
+		}
+	}
+}

@@ -1,0 +1,38 @@
+{
+	"name": "setVariablesipeline",
+	"properties": {
+		"activities": [
+			{
+				"name": "Set variable",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "FileType",
+					"value": {
+						"value": "@replace(pipeline().parameters.fileName,'Sales' ,'hourly' )",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"parameters": {
+			"fileName": {
+				"type": "string",
+				"defaultValue": "DailySales"
+			}
+		},
+		"variables": {
+			"FileType": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2024-01-04T10:46:02Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

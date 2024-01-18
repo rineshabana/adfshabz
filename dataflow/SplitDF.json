@@ -1,0 +1,82 @@
+{
+	"name": "SplitDF",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "EmployeeDataSet",
+						"type": "DatasetReference"
+					},
+					"name": "AllEmployees"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "OutputdataSet",
+						"type": "DatasetReference"
+					},
+					"name": "ITEmployeesSink",
+					"rejectedDataLinkedService": {
+						"referenceName": "LinkedService_StorageDemo",
+						"type": "LinkedServiceReference"
+					}
+				},
+				{
+					"dataset": {
+						"referenceName": "OutputdataSet",
+						"type": "DatasetReference"
+					},
+					"name": "PayrollEmployeeSink"
+				},
+				{
+					"dataset": {
+						"referenceName": "OutputdataSet",
+						"type": "DatasetReference"
+					},
+					"name": "HREmployeeSink"
+				}
+			],
+			"transformations": [
+				{
+					"name": "ITEmployees"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          empid as string,",
+				"          name as string,",
+				"          country as string,",
+				"          department as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> AllEmployees",
+				"AllEmployees split(equals(department,'1'),",
+				"     equals(department,'2'),",
+				"     equals(department,'3'),",
+				"     disjoint: false) ~> ITEmployees@(ITEmployee, PayrollEmployee, HREmployee)",
+				"ITEmployees@ITEmployee sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['ITEmployee.csv'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> ITEmployeesSink",
+				"ITEmployees@PayrollEmployee sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['PayrollEmployee.csv'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> PayrollEmployeeSink",
+				"ITEmployees@HREmployee sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['HREmployee.csv'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> HREmployeeSink"
+			]
+		}
+	}
+}

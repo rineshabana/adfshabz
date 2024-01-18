@@ -1,0 +1,83 @@
+{
+	"name": "masterPipeline",
+	"properties": {
+		"activities": [
+			{
+				"name": "Execute Pipeline1",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "pipeline2",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"database": {
+							"value": "@pipeline().parameters.dbname",
+							"type": "Expression"
+						},
+						"servername": {
+							"value": "@pipeline().parameters.servername",
+							"type": "Expression"
+						},
+						"username": {
+							"value": "@pipeline().parameters.uname",
+							"type": "Expression"
+						},
+						"password": {
+							"value": "@pipeline().parameters.pass",
+							"type": "Expression"
+						},
+						"tablename": {
+							"value": "@pipeline().parameters.tbname",
+							"type": "Expression"
+						},
+						"table2": {
+							"value": "@pipeline().parameters.tb2",
+							"type": "Expression"
+						},
+						"tablesource": {
+							"value": "@pipeline().parameters.tbsource",
+							"type": "Expression"
+						},
+						"tabledestination": {
+							"value": "@pipeline().parameters.tbdestination",
+							"type": "Expression"
+						}
+					}
+				}
+			}
+		],
+		"parameters": {
+			"dbname": {
+				"type": "String"
+			},
+			"servername": {
+				"type": "String"
+			},
+			"uname": {
+				"type": "String"
+			},
+			"pass": {
+				"type": "String"
+			},
+			"tbname": {
+				"type": "String"
+			},
+			"tb2": {
+				"type": "String"
+			},
+			"tbsource": {
+				"type": "String"
+			},
+			"tbdestination": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2024-01-05T06:41:42Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

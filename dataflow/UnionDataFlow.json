@@ -1,0 +1,81 @@
+{
+	"name": "UnionDataFlow",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ITEmployees",
+						"type": "DatasetReference"
+					},
+					"name": "ITEmployees"
+				},
+				{
+					"dataset": {
+						"referenceName": "HREmployees",
+						"type": "DatasetReference"
+					},
+					"name": "HREmployees"
+				},
+				{
+					"dataset": {
+						"referenceName": "PayrollEmployees",
+						"type": "DatasetReference"
+					},
+					"name": "PayrollEmployee"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "OutputdataSet",
+						"type": "DatasetReference"
+					},
+					"name": "AllEmployeesSink"
+				}
+			],
+			"transformations": [
+				{
+					"name": "unionALLEmployees"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          empid as string,",
+				"          name as string,",
+				"          country as string,",
+				"          department as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> ITEmployees",
+				"source(output(",
+				"          empid as string,",
+				"          name as string,",
+				"          country as string,",
+				"          department as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> HREmployees",
+				"source(output(",
+				"          empid as string,",
+				"          name as string,",
+				"          country as string,",
+				"          department as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> PayrollEmployee",
+				"ITEmployees, HREmployees, PayrollEmployee union(byName: true)~> unionALLEmployees",
+				"unionALLEmployees sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['AllEmployeesUnion.csv'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> AllEmployeesSink"
+			]
+		}
+	}
+}

@@ -1,0 +1,45 @@
+{
+	"name": "Parampipeline",
+	"properties": {
+		"activities": [
+			{
+				"name": "Param Data flow1",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "ParameterizeMappingdataflow",
+						"type": "DataFlowReference",
+						"parameters": {
+							"deptName": {
+								"value": "'@{pipeline().parameters.dept}'",
+								"type": "Expression"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			}
+		],
+		"parameters": {
+			"dept": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2024-01-15T10:57:22Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}
