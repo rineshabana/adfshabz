@@ -5,26 +5,6 @@
 			"referenceName": "SqlServerOnPremise",
 			"type": "LinkedServiceReference"
 		},
-		"parameters": {
-			"db": {
-				"type": "String"
-			},
-			"server": {
-				"type": "String"
-			},
-			"user": {
-				"type": "String"
-			},
-			"pass": {
-				"type": "String"
-			},
-			"table": {
-				"type": "string"
-			},
-			"dbo": {
-				"type": "String"
-			}
-		},
 		"annotations": [],
 		"type": "SqlServerTable",
 		"schema": [],
