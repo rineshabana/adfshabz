@@ -2,26 +2,8 @@
 	"name": "DataSetSqlTable",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "SqlServer1",
-			"type": "LinkedServiceReference",
-			"parameters": {
-				"dbName": {
-					"value": "@dataset().db",
-					"type": "Expression"
-				},
-				"serverName": {
-					"value": "@dataset().server",
-					"type": "Expression"
-				},
-				"userName": {
-					"value": "@dataset().user",
-					"type": "Expression"
-				},
-				"Password": {
-					"value": "@dataset().pass",
-					"type": "Expression"
-				}
-			}
+			"referenceName": "SqlServerOnPremise",
+			"type": "LinkedServiceReference"
 		},
 		"parameters": {
 			"db": {
@@ -47,14 +29,8 @@
 		"type": "SqlServerTable",
 		"schema": [],
 		"typeProperties": {
-			"schema": {
-				"value": "@dataset().dbo",
-				"type": "Expression"
-			},
-			"table": {
-				"value": "@dataset().table",
-				"type": "Expression"
-			}
+			"schema": "dbo",
+			"table": "tbl_Employees"
 		}
 	},
 	"type": "Microsoft.DataFactory/factories/datasets"
