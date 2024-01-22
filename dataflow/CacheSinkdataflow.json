@@ -6,7 +6,7 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "EmployeeDataSet",
+						"referenceName": "Employees1DataSet",
 						"type": "DatasetReference"
 					},
 					"name": "source1"
@@ -26,13 +26,16 @@
 				"source(output(",
 				"          empid as string,",
 				"          name as string,",
+				"          gender as string,",
+				"          country as string,",
 				"          salary as string,",
 				"          department as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> source1",
-				"source1 aggregate(MaxSalary = max(toInteger(salary))) ~> maxaggregate",
+				"source1 aggregate(MaxSalary = max(toInteger(salary)),",
+				"     partitionBy('hash', 1)) ~> maxaggregate",
 				"maxaggregate sink(validateSchema: false,",
 				"     partitionFileNames:[''],",
 				"     skipDuplicateMapInputs: true,",
