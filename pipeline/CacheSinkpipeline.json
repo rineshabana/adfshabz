@@ -28,8 +28,34 @@
 						"firstRowOnly": true
 					}
 				}
+			},
+			{
+				"name": "Set variable1",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "CacheSink Data flow",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "MaxSalary",
+					"value": "@string(activity('CacheSink Data flow').output.runStatus.output.sink1.value[0].MaxSalary)"
+				}
 			}
 		],
+		"variables": {
+			"MaxSalary": {
+				"type": "String"
+			}
+		},
 		"annotations": []
 	}
 }
