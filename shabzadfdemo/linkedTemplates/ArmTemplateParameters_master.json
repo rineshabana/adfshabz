@@ -1,0 +1,51 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "shabzadfdemo"
+		},
+		"LinkedService_StorageDemo_connectionString": {
+			"value": ""
+		},
+		"SqlServer_connectionString": {
+			"value": ""
+		},
+		"SqlServer1_connectionString": {
+			"value": "Integrated Security=False;Data Source=@{linkedService().serverName};Initial Catalog=@{linkedService().dbName};User ID=@{linkedService().userName};Password=@{linkedService().Password}"
+		},
+		"SqlServerOnPremise_connectionString": {
+			"value": ""
+		},
+		"trigger1_properties_pipeline2_parameters_database": {
+			"value": "testdb"
+		},
+		"trigger1_properties_pipeline2_parameters_servername": {
+			"value": "testserver"
+		},
+		"trigger1_properties_pipeline2_parameters_username": {
+			"value": "abc"
+		},
+		"trigger1_properties_pipeline2_parameters_password": {
+			"value": "1234"
+		},
+		"trigger1_properties_pipeline2_parameters_tablename": {
+			"value": "able"
+		},
+		"trigger1_properties_pipeline2_parameters_table2": {
+			"value": "tt"
+		},
+		"trigger1_properties_pipeline2_parameters_tablesource": {
+			"value": "table1"
+		},
+		"trigger1_properties_pipeline2_parameters_tabledestination": {
+			"value": "table2"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}

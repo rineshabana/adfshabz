@@ -1,0 +1,207 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "shabzadfdemo"
+		},
+		"LinkedService_StorageDemo_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'LinkedService_StorageDemo'"
+		},
+		"SqlServer_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'SqlServer'"
+		},
+		"SqlServer1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'SqlServer1'",
+			"defaultValue": "Integrated Security=False;Data Source=@{linkedService().serverName};Initial Catalog=@{linkedService().dbName};User ID=@{linkedService().userName};Password=@{linkedService().Password}"
+		},
+		"SqlServerOnPremise_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'SqlServerOnPremise'"
+		},
+		"trigger1_properties_pipeline2_parameters_database": {
+			"type": "string",
+			"defaultValue": "testdb"
+		},
+		"trigger1_properties_pipeline2_parameters_servername": {
+			"type": "string",
+			"defaultValue": "testserver"
+		},
+		"trigger1_properties_pipeline2_parameters_username": {
+			"type": "string",
+			"defaultValue": "abc"
+		},
+		"trigger1_properties_pipeline2_parameters_password": {
+			"type": "string",
+			"defaultValue": "1234"
+		},
+		"trigger1_properties_pipeline2_parameters_tablename": {
+			"type": "string",
+			"defaultValue": "able"
+		},
+		"trigger1_properties_pipeline2_parameters_table2": {
+			"type": "string",
+			"defaultValue": "tt"
+		},
+		"trigger1_properties_pipeline2_parameters_tablesource": {
+			"type": "string",
+			"defaultValue": "table1"
+		},
+		"trigger1_properties_pipeline2_parameters_tabledestination": {
+			"type": "string",
+			"defaultValue": "table2"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "shabzadfdemo_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"LinkedService_StorageDemo_connectionString": {
+						"value": "[parameters('LinkedService_StorageDemo_connectionString')]"
+					},
+					"SqlServer1_connectionString": {
+						"value": "[parameters('SqlServer1_connectionString')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "shabzadfdemo_ArmTemplate_1",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"SqlServer_connectionString": {
+						"value": "[parameters('SqlServer_connectionString')]"
+					},
+					"SqlServerOnPremise_connectionString": {
+						"value": "[parameters('SqlServerOnPremise_connectionString')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'shabzadfdemo_ArmTemplate_0')]"
+			]
+		},
+		{
+			"name": "shabzadfdemo_ArmTemplate_2",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_2.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'shabzadfdemo_ArmTemplate_1')]"
+			]
+		},
+		{
+			"name": "shabzadfdemo_ArmTemplate_3",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_3.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'shabzadfdemo_ArmTemplate_2')]"
+			]
+		},
+		{
+			"name": "shabzadfdemo_ArmTemplate_4",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_4.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"trigger1_properties_pipeline2_parameters_database": {
+						"value": "[parameters('trigger1_properties_pipeline2_parameters_database')]"
+					},
+					"trigger1_properties_pipeline2_parameters_servername": {
+						"value": "[parameters('trigger1_properties_pipeline2_parameters_servername')]"
+					},
+					"trigger1_properties_pipeline2_parameters_username": {
+						"value": "[parameters('trigger1_properties_pipeline2_parameters_username')]"
+					},
+					"trigger1_properties_pipeline2_parameters_password": {
+						"value": "[parameters('trigger1_properties_pipeline2_parameters_password')]"
+					},
+					"trigger1_properties_pipeline2_parameters_tablename": {
+						"value": "[parameters('trigger1_properties_pipeline2_parameters_tablename')]"
+					},
+					"trigger1_properties_pipeline2_parameters_table2": {
+						"value": "[parameters('trigger1_properties_pipeline2_parameters_table2')]"
+					},
+					"trigger1_properties_pipeline2_parameters_tablesource": {
+						"value": "[parameters('trigger1_properties_pipeline2_parameters_tablesource')]"
+					},
+					"trigger1_properties_pipeline2_parameters_tabledestination": {
+						"value": "[parameters('trigger1_properties_pipeline2_parameters_tabledestination')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'shabzadfdemo_ArmTemplate_3')]"
+			]
+		}
+	]
+}
