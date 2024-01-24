@@ -49,6 +49,12 @@
 				"     partitionFileNames:['StringifyEmployees.csv'],",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
+				"     mapColumn(",
+				"          id,",
+				"          name,",
+				"          skills,",
+				"          ContactStringify",
+				"     ),",
 				"     partitionBy('hash', 1)) ~> sink1"
 			]
 		}
