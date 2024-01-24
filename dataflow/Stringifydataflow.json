@@ -1,32 +1,55 @@
 {
-	"name": "dataflow2",
+	"name": "Stringifydataflow",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [
 				{
-					"linkedService": {
-						"referenceName": "LinkedService_StorageDemo",
-						"type": "LinkedServiceReference"
+					"dataset": {
+						"referenceName": "EmployeeJson",
+						"type": "DatasetReference"
 					},
 					"name": "source1"
 				}
 			],
-			"sinks": [],
-			"transformations": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "OutputdataSet",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "stringify1"
+				},
+				{
+					"name": "derivedColumn1"
+				}
+			],
 			"scriptLines": [
-				"source(useSchema: false,",
+				"source(output(",
+				"          id as string,",
+				"          name as string,",
+				"          skills as string[],",
+				"          Address as (state as string, country as string, zipcode as string),",
+				"          Contact as (Phone as string, email as string)",
+				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false,",
-				"     format: 'delimited',",
-				"     container: 'adfdemo',",
-				"     folderPath: 'input',",
-				"     fileName: 'employees.json',",
-				"     columnDelimiter: ',',",
-				"     escapeChar: '\\\\',",
-				"     quoteChar: '\\\"',",
-				"     columnNamesAsHeader: false) ~> source1"
+				"     documentForm: 'arrayOfDocuments') ~> source1",
+				"source1 stringify(ContactStringify = Contact ? string,",
+				"     format: 'json') ~> stringify1",
+				"stringify1 derive(ContactStringify = toString(ContactStringify)) ~> derivedColumn1",
+				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['StringifyEmployees.csv'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> sink1"
 			]
 		}
 	}
