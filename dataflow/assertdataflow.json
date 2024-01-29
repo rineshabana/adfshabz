@@ -10,12 +10,22 @@
 						"type": "DatasetReference"
 					},
 					"name": "Employees"
+				},
+				{
+					"dataset": {
+						"referenceName": "DeprtamentdataSet",
+						"type": "DatasetReference"
+					},
+					"name": "DEPT"
 				}
 			],
 			"sinks": [],
 			"transformations": [
 				{
 					"name": "assert1"
+				},
+				{
+					"name": "derivedColumn1"
 				}
 			],
 			"scriptLines": [
@@ -23,12 +33,23 @@
 				"          empid as short,",
 				"          name as string,",
 				"          doj as string,",
-				"          department as short",
+				"          department as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> Employees",
-				"Employees assert(expectTrue(!isNull(toDate(doj,'yyyyMMdd')), false, 'assert1')) ~> assert1"
+				"source(output(",
+				"          deptid as string,",
+				"          depname as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> DEPT",
+				"Employees, DEPT assert(expectTrue(!isNull(toDate(doj,'yyyyMMdd')), false, 'AssertDoj'),",
+				"     expectUnique(empid, false, 'assertEmpId'),",
+				"     expectExists(department == deptid, false, 'assertExist')) ~> assert1",
+				"assert1 derive(isErrorROw = isError(),",
+				"          isInCorrectDeptRow = hasError('assertExist')) ~> derivedColumn1"
 			]
 		}
 	}
