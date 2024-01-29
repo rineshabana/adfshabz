@@ -26,6 +26,9 @@
 				},
 				{
 					"name": "derivedColumn1"
+				},
+				{
+					"name": "filtergoodrows"
 				}
 			],
 			"scriptLines": [
@@ -49,7 +52,8 @@
 				"     expectUnique(empid, false, 'assertEmpId'),",
 				"     expectExists(department == deptid, false, 'assertExist')) ~> assert1",
 				"assert1 derive(isErrorROw = isError(),",
-				"          isInCorrectDeptRow = hasError('assertExist')) ~> derivedColumn1"
+				"          isInCorrectDeptRow = hasError('assertExist')) ~> derivedColumn1",
+				"derivedColumn1 filter(isErrorROw == false()) ~> filtergoodrows"
 			]
 		}
 	}
