@@ -1,0 +1,40 @@
+{
+	"name": "p_trumbling_window _rigger",
+	"properties": {
+		"activities": [
+			{
+				"name": "set_start_end_time",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "output",
+					"value": {
+						"value": "@concat('starttime->',pipeline().parameters.starttime,'endtime->',pipeline().parameters.endtime)",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"parameters": {
+			"starttime": {
+				"type": "string"
+			},
+			"endtime": {
+				"type": "string"
+			}
+		},
+		"variables": {
+			"output": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2024-11-05T16:51:19Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

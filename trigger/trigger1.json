@@ -1,0 +1,33 @@
+{
+	"name": "trigger1",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "p_test_multi_api",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"api_type": [
+						"posts",
+						"comments",
+						"albums",
+						"photos",
+						"users"
+					]
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Minute",
+				"interval": 15,
+				"startTime": "2024-11-04T17:22:00",
+				"timeZone": "India Standard Time"
+			}
+		}
+	}
+}
